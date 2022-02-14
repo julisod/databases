@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button, Alert, FlatList } from 'react-native';
+import { StyleSheet, View, Text, Button, Keyboard, FlatList } from 'react-native';
 import { Input } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
@@ -18,6 +18,7 @@ export default function Sqlite() {
       }, null, updateList);
     setProduct("");
     setAmount("");
+    Keyboard.dismiss(); //hides the keyboard
   }
 
   const updateList = () => {
