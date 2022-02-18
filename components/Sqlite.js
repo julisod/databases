@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button, Keyboard, FlatList } from 'react-native';
-import { Input } from 'react-native-elements';
+import { StyleSheet, View, Text, Keyboard, FlatList } from 'react-native';
+import { Input, ListItem, Button,  } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("products.db");
@@ -44,6 +44,7 @@ export default function Sqlite() {
     }, null, updateList);
   }, []);
 
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
@@ -61,7 +62,13 @@ export default function Sqlite() {
             leftIcon={{ type: 'material-community', name: 'format-list-numbered-rtl' }}
             onChangeText={input => setAmount(input)}
           />
-        <Button onPress={save} title="Add" />
+        <View style={{width: "30%"}}>
+          <Button
+            icon={{name: 'add-shopping-cart', color: "white"}}
+            onPress={save}
+            title="ADD"
+          />
+        </View>
       </View>
         <Text style={styles.listHeader}>Shopping list</Text>
         <FlatList
@@ -69,12 +76,14 @@ export default function Sqlite() {
           /* contentContainerStyle={{ marginTop: 50 }} */
           ListEmptyComponent={<Text>The list is empty, try adding some products</Text>}
           keyExtractor={item => item.id.toString()} 
-          renderItem={({item}) =>
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{fontSize:20, fontWeight: "bold"}}> {item.product} </Text>
-            <Text style={{fontSize:20}}> {item.amount} </Text>
-            <Text style={styles.delete} onPress={() => deleteItem(item.id)}>bought</Text>
-          </View>}
+          renderItem={({ item }) => (
+            <ListItem bottomDivider>
+              <ListItem.Content>
+                <ListItem.Title>{item.product}</ListItem.Title>
+                <ListItem.Subtitle>{item.amount}</ListItem.Subtitle>
+              </ListItem.Content>
+              
+            </ListItem>)}
         />
       </View>
   );
@@ -84,12 +93,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    /* alignItems: 'center', */
     justifyContent: 'center',
     margin: 10,
   },
   input: {
-    width:"80%",
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20
