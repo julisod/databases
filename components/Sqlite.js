@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Keyboard, FlatList } from 'react-native';
-import { Input, ListItem, Button,  } from 'react-native-elements';
+import { Input, ListItem, Button, Icon } from 'react-native-elements';
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("products.db");
@@ -82,7 +82,9 @@ export default function Sqlite() {
                 <ListItem.Title>{item.product}</ListItem.Title>
                 <ListItem.Subtitle>{item.amount}</ListItem.Subtitle>
               </ListItem.Content>
-              
+              <ListItem.Content right>
+                <Icon name="delete" color="red" onPress={() => deleteItem(item.id)} />
+              </ListItem.Content>
             </ListItem>)}
         />
       </View>
